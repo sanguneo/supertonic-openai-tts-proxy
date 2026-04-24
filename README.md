@@ -46,6 +46,11 @@ Default server:
 http://127.0.0.1:8789
 ```
 
+Open browser:
+- `http://127.0.0.1:8789/`
+
+The page includes a tiny TTS playground for quick local testing.
+
 ## Smoke test
 
 ```bash

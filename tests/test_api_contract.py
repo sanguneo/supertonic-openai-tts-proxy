@@ -1,11 +1,22 @@
-from pathlib import Path
-
 from fastapi.testclient import TestClient
 
 from supertonic_openai_tts_proxy.main import app
 
 
 client = TestClient(app)
+
+
+def test_frontend_page_contains_playground_form():
+    res = client.get("/")
+
+    assert res.status_code == 200
+    html = res.text
+    assert "Supertonic TTS Playground" in html
+    assert 'id="tts-form"' in html
+    assert 'id="tts-input"' in html
+    assert 'id="tts-response-format"' in html
+    assert 'id="tts-result"' in html
+    assert "/v1/audio/speech" in html
 
 
 def test_health():
@@ -27,7 +38,7 @@ def test_audio_speech_returns_binary(monkeypatch, tmp_path):
     wav_path = tmp_path / "fake.wav"
     wav_path.write_bytes(b"RIFFfake")
 
-    def fake_synthesize_to_wav(req, work_dir: Path):
+    def fake_synthesize_to_wav(req, work_dir):
         return wav_path
 
     def fake_convert_audio(source_path, response_format, work_dir):

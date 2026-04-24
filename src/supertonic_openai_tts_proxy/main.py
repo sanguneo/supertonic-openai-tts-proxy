@@ -1,9 +1,10 @@
 import shutil
 import tempfile
+from functools import lru_cache
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from starlette.background import BackgroundTask
 
 from .audio import convert_audio
@@ -11,6 +12,18 @@ from .schemas import SpeechRequest
 from .synth import synthesize_to_wav
 
 app = FastAPI(title="Supertonic OpenAI TTS Proxy", version="0.1.0")
+ROOT_DIR = Path(__file__).resolve().parents[2]
+FRONTEND_PATH = ROOT_DIR / "frontend" / "index.html"
+
+
+@lru_cache(maxsize=1)
+def _load_frontend_html() -> str:
+    return FRONTEND_PATH.read_text(encoding="utf-8")
+
+
+@app.get("/")
+def index() -> HTMLResponse:
+    return HTMLResponse(_load_frontend_html())
 
 
 @app.get("/health")
