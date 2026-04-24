@@ -101,10 +101,16 @@ tts:
 VOICE_TOOLS_OPENAI_KEY=dummy
 ```
 
+Or run the helper script:
+
+```bash
+./scripts/setup-hermes-config.sh
+```
+
 ## Notes
 
 - First request may download/load Supertonic assets and can be slow.
-- Korean default: `lang=ko`, `voice=F1`, `total_steps=6`.
+- Korean default: `lang=ko`, `voice=F1`, `total_steps=3`.
 - Long text is split into chunks before synthesis.
 - Non-WAV formats require `ffmpeg`.
 - Hermes streaming voice mode is separate and may still use ElevenLabs internals.
