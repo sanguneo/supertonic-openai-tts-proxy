@@ -40,5 +40,6 @@ fi
 echo "Hermes config updated."
 echo "Backup: $CFG_BAK"
 echo "Backup: $ENV_BAK"
+echo "Restore command: ./scripts/restore-hermes-config.sh $TS"
 echo "Restart gateway if needed: hermes gateway restart"
 echo "Verify: hermes doctor && hermes gateway status"

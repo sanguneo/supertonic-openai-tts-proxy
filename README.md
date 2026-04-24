@@ -167,6 +167,23 @@ Logs:
 ./scripts/setup-hermes-config.sh
 ```
 
+스크립트는 적용 전 아래 파일을 timestamp가 붙은 `.bak.<timestamp>` 파일로 백업합니다.
+
+```text
+~/.hermes/config.yaml.bak.<timestamp>
+~/.hermes/.env.bak.<timestamp>
+```
+
+복원도 스크립트로 가능합니다.
+
+```bash
+./scripts/restore-hermes-config.sh --list
+./scripts/restore-hermes-config.sh --latest
+./scripts/restore-hermes-config.sh 20260424_105304
+```
+
+복원 스크립트는 현재 설정도 `.pre-restore.<timestamp>`로 한 번 더 백업한 뒤 되돌립니다.
+
 스크립트가 적용하는 기본값:
 
 ```yaml
@@ -244,6 +261,7 @@ speed=1.3
 │   └── index.html              # tiny browser playground
 ├── scripts/
 │   ├── install-user-service.sh
+│   ├── restore-hermes-config.sh
 │   ├── run-dev.sh
 │   ├── service-status.sh
 │   ├── setup-hermes-config.sh
