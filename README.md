@@ -19,7 +19,7 @@ Hermes core 수정 없이 Hermes `tts.provider: openai` 경로를 그대로 재�
   "input": "안녕하세요.",
   "response_format": "mp3",
   "speed": 1.3,
-  "total_steps": 6
+  "total_steps": 3
 }
 ```
 

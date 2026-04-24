@@ -13,7 +13,7 @@ class SpeechRequest(BaseModel):
     response_format: TResponseFormat = "mp3"
     speed: float = 1.3
     lang: str = "ko"
-    total_steps: int = 6
+    total_steps: int = 3
 
     @field_validator("input")
     @classmethod

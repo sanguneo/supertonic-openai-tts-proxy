@@ -9,7 +9,7 @@ def test_speech_request_defaults():
     assert req.response_format == "mp3"
     assert req.speed == 1.3
     assert req.lang == "ko"
-    assert req.total_steps == 6
+    assert req.total_steps == 3
 
 
 def test_speech_request_accepts_custom_total_steps():
