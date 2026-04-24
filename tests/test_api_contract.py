@@ -15,6 +15,7 @@ def test_frontend_page_contains_playground_form():
     assert 'id="tts-form"' in html
     assert 'id="tts-input"' in html
     assert 'id="tts-response-format"' in html
+    assert 'id="tts-total-steps"' in html
     assert 'id="tts-result"' in html
     assert "/v1/audio/speech" in html
 
@@ -37,8 +38,11 @@ def test_models_endpoint():
 def test_audio_speech_returns_binary(monkeypatch, tmp_path):
     wav_path = tmp_path / "fake.wav"
     wav_path.write_bytes(b"RIFFfake")
+    seen = {}
 
     def fake_synthesize_to_wav(req, work_dir):
+        seen["total_steps"] = req.total_steps
+        seen["voice"] = req.voice
         return wav_path
 
     def fake_convert_audio(source_path, response_format, work_dir):
@@ -59,12 +63,15 @@ def test_audio_speech_returns_binary(monkeypatch, tmp_path):
             "input": "안녕하세요. 테스트입니다.",
             "response_format": "wav",
             "speed": 1.3,
+            "total_steps": 10,
         },
     )
 
     assert res.status_code == 200
     assert res.headers["content-type"].startswith("audio/wav")
     assert res.content == b"RIFFfake"
+    assert seen["total_steps"] == 10
+    assert seen["voice"] == "F1"
 
 
 def test_audio_speech_rejects_empty_input():
