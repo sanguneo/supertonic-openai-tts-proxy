@@ -52,6 +52,28 @@ http://127.0.0.1:8789
 ./scripts/smoke-test.sh
 ```
 
+## Install as user service
+
+No sudo required. WSL user systemd is supported.
+
+```bash
+./scripts/install-user-service.sh
+./scripts/service-status.sh
+```
+
+Uninstall:
+
+```bash
+./scripts/uninstall-user-service.sh
+```
+
+Logs:
+
+```text
+.logs/service.log
+.logs/service.err.log
+```
+
 ## Hermes config
 
 `~/.hermes/config.yaml`:

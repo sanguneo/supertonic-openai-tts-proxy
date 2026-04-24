@@ -10,5 +10,6 @@ __pycache__/
 *.mp3
 *.ogg
 .cache/
+.logs/
 dist/
 build/
