@@ -7,13 +7,13 @@ TResponseFormat = Literal["mp3", "opus", "wav"]
 
 
 class SpeechRequest(BaseModel):
-    model: str = "supertonic-2"
+    model: str = "supertonic-3"
     input: str = Field(min_length=1)
     voice: str = "F1"
     response_format: TResponseFormat = "mp3"
     speed: float = 1.3
     lang: str = "ko"
-    total_steps: int = 3
+    total_steps: int = 6
 
     @field_validator("input")
     @classmethod

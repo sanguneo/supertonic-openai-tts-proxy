@@ -1,3 +1,4 @@
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -7,13 +8,16 @@ import soundfile as sf
 
 from .schemas import SpeechRequest
 
+# Supertonic 3 model directory (downloaded from Hugging Face)
+V3_MODEL_DIR = os.path.expanduser("~/.cache/supertonic3")
+
 
 def split_text(text: str, max_chars: int = 260) -> list[str]:
     text = text.replace("\\n", "\n").strip()
     if len(text) <= max_chars:
         return [text]
 
-    parts = [p.strip() for p in re.split(r"(?<=[.!?。！？.])\s+|\n+", text) if p.strip()]
+    parts = [p.strip() for p in re.split(r"(?<=[.!?。！？.])\\s+|\\n+", text) if p.strip()]
     chunks: list[str] = []
     current = ""
     for part in parts:
@@ -41,7 +45,7 @@ def split_text(text: str, max_chars: int = 260) -> list[str]:
 def get_tts():
     from supertonic import TTS
 
-    return TTS(auto_download=True)
+    return TTS(auto_download=False, model_dir=V3_MODEL_DIR, model="supertonic-2")
 
 
 def _synthesize_chunk(tts, text: str, req: SpeechRequest):

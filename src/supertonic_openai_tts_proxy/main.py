@@ -37,7 +37,7 @@ def models() -> dict[str, object]:
         "object": "list",
         "data": [
             {
-                "id": "supertonic-2",
+                "id": "supertonic-3",
                 "object": "model",
                 "owned_by": "local",
             }
