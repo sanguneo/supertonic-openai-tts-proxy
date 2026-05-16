@@ -55,8 +55,9 @@ mp3 / opus / wav
 
 - OpenAI-compatible `POST /v1/audio/speech`
 - Supertonic 기반 로컬 TTS 합성
-- `mp3`, `opus`, `wav` 응답 지원
+  - `mp3`, `opus`, `wav` 응답 지원
 - 긴 텍스트 chunking 처리
+- **Supertonic 3** 기반 (31개 언어, 44100Hz)
 - Supertonic quality/steps 제어 (`total_steps`)
 - Hermes 설정 자동 적용 스크립트
 - WSL user systemd 서비스 스크립트
@@ -78,12 +79,12 @@ mp3 / opus / wav
 
 ```json
 {
-  "model": "supertonic-2",
+  "model": "supertonic-3",
   "voice": "F1",
   "input": "안녕하세요. Supertonic TTS 테스트입니다.",
   "response_format": "mp3",
   "speed": 1.3,
-  "total_steps": 3
+  "total_steps": 6
 }
 ```
 
@@ -99,10 +100,14 @@ mp3 / opus / wav
 
 ## Quick start
 
-### 1. Install
+### 1. Install & download models
 
 ```bash
 uv sync
+
+# Download Supertonic 3 ONNX models (~381MB)
+# You can also set SUPERTONIC_MODEL_DIR to custom path
+./scripts/download-v3-models.sh
 ```
 
 ### 2. Run dev server
@@ -191,34 +196,7 @@ tts:
   provider: openai
   openai:
     base_url: http://127.0.0.1:8789/v1
-    model: supertonic-2
-    voice: F1
-    speed: 1.3
-    max_text_length: 2000
-```
-
-`.env`에는 dummy key를 넣습니다. 로컬 프록시라 실제 OpenAI key는 필요 없습니다.
-
-```bash
-VOICE_TOOLS_OPENAI_KEY=dummy
-```
-
-적용 후 gateway를 쓰고 있다면 재시작합니다.
-
-```bash
-hermes gateway restart
-```
-
-### Option B. Manual config
-
-`~/.hermes/config.yaml`:
-
-```yaml
-tts:
-  provider: openai
-  openai:
-    base_url: http://127.0.0.1:8789/v1
-    model: supertonic-2
+    model: supertonic-3
     voice: F1
     speed: 1.3
     max_text_length: 2000
@@ -237,9 +215,9 @@ VOICE_TOOLS_OPENAI_KEY=dummy
 Supertonic quality 설정은 OpenAI 호환 요청의 확장 필드 `total_steps`로 넘깁니다.
 
 | Quality | `total_steps` | Use case |
-|---|---:|---|
-| Low | `3` | 빠른 응답, 기본값 |
-| Normal | `6` | 균형 |
+|------:|---:|---|
+| Low | `3` | 빠른 응답 |
+| Normal | `6` | 균형 (기본값) |
 | High | `10` | 더 좋은 품질, 느릴 수 있음 |
 
 현재 기본값:
@@ -247,7 +225,7 @@ Supertonic quality 설정은 OpenAI 호환 요청의 확장 필드 `total_steps`
 ```text
 lang=ko
 voice=F1
-total_steps=3
+total_steps=6
 speed=1.3
 ```
 
@@ -260,6 +238,7 @@ speed=1.3
 ├── frontend/
 │   └── index.html              # tiny browser playground
 ├── scripts/
+│   ├── download-v3-models.sh
 │   ├── install-user-service.sh
 │   ├── restore-hermes-config.sh
 │   ├── run-dev.sh

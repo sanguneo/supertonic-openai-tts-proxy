@@ -9,7 +9,11 @@ import soundfile as sf
 from .schemas import SpeechRequest
 
 # Supertonic 3 model directory (downloaded from Hugging Face)
-V3_MODEL_DIR = os.path.expanduser("~/.cache/supertonic3")
+# Override via SUPERTONIC_MODEL_DIR env var, defaults to ~/.cache/supertonic3
+V3_MODEL_DIR = os.environ.get(
+    "SUPERTONIC_MODEL_DIR",
+    os.path.expanduser("~/.cache/supertonic3"),
+)
 
 
 def split_text(text: str, max_chars: int = 260) -> list[str]:
