@@ -49,6 +49,8 @@ Supertonic
 mp3 / opus / wav
 ```
 
+> 자세한 후기는 블로그 글 참고: [Supertonic 3 업그레이드 후기](https://blog.sanguneo.com/83)
+
 ---
 
 ## Features
