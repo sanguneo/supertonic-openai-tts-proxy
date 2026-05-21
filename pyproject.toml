@@ -1,28 +1,18 @@
 [project]
-name = "supertonic-openai-tts-proxy"
-version = "0.1.0"
-description = "OpenAI-compatible local TTS proxy backed by Supertonic"
+name = "supertonic-proxy"
+version = "0.2.0"
+description = "Thin proxy for supertonic serve with ffmpeg audio conversion (opus/mp3/aac)"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "fastapi>=0.115.0",
-    "uvicorn>=0.34.0",
-    "pydantic>=2.10.0",
-    "supertonic>=0.1.0",
-    "numpy>=1.26.0,<2.0",
-    "soundfile>=0.13.0",
-]
-
-[dependency-groups]
-dev = [
-    "pytest>=8.0.0",
-    "httpx>=0.28.0",
-    "pytest-asyncio>=0.25.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "httpx>=0.27",
 ]
 
 [project.scripts]
-supertonic-openai-tts-proxy = "supertonic_openai_tts_proxy.main:run"
+supertonic-proxy = "supertonic_proxy.main:app"
 
 [build-system]
-requires = ["uv_build>=0.11.6,<0.12.0"]
+requires = ["uv_build>=0.11,<0.12"]
 build-backend = "uv_build"

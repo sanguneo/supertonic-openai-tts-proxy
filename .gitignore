@@ -1,15 +1,6 @@
 .venv/
 __pycache__/
-.pytest_cache/
 *.pyc
-*.pyo
-*.egg-info/
-.env
 .DS_Store
-*.wav
-*.mp3
-*.ogg
 .cache/
 .logs/
-dist/
-build/
